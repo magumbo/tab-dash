@@ -1,0 +1,169 @@
+		
+						
+			<div class="headArea" ng-class="{'fullWidth': userSettings.fullWidth}">
+			
+
+			
+			<!--	<div ng-click="refreshTran()" translate="HEADLINE_TEXT">HEADLINE_TEXT</div>
+			-->
+				<div class="headerMenu">
+					<ul class="headerActions singleSelect">
+						<li class="search pDMessageLink" title="{{ 'Search' | translate }}" send-title><input type="text" placeholder="{{ 'Search' | translate }}" ng-model="filterOptions.filterText" /></li>
+						<li class="settings enabled"><a class="pDMessageLink" href="" title="{{ 'My Settings' | translate }}" ng-click="showSettings = !showSettings" send-title>{{ 'My Settings' | translate }}</a></li>
+					</ul>
+					<ul class="headerActions multiActions fRight">
+						<li>&nbsp;</li>
+						<!--
+						<li class="change fadeToggle" ng-show="sitePerms['Allow_Ownership_change__c']" ng-class="{'disabled': !activeSite, 'enabled': activeSite}">
+							<a class="pDMessageLink" href="" ng-show="activeSite" ng-click="retrieveUsers()" title="{{ 'Change Owner' | translate }}" send-title>{{ 'Change Owner' | translate }}</a>
+						</li>
+						-->
+						<li class="purchase fadeToggle" ng-show="sitePerms['Allow_Buy__c']" ng-class="{'disabled': !activeSite, 'enabled': activeSite}">
+							<a class="pDMessageLink" href="" ng-show="activeSite" ng-click="purchaseSites()" title="{{ 'Purchase' | translate }}" send-title>{{ 'Purchase' | translate }}</a>
+						</li>
+						<li class="delete fadeToggle" ng-show="sitePerms['Allow_Delete__c']" ng-class="{'disabled': !activeSite, 'enabled': activeSite}">
+							<a class="pDMessageLink" href="" ng-show="activeSite" ng-click="confirmDelete = !confirmDelete" title="{{ 'Delete' | translate }}" send-title>{{ 'Delete' | translate }}</a>
+						</li>
+						<li class="create fadeToggle enabled" ng-show="locals['allowCreateSite']">
+							<a class="pDMessageLink" href="CreateMobileSite" title="{{ 'Create' | translate }}" translate>Create</a>
+						</li>
+					</ul>
+					
+					<ul class="headerActions pDMessage"><li class="pDMessage">{{headMessage}}</li></ul>
+
+					<ul class="headerActions groupActions fRight" ng-class="{'multiSelect': multiSelect, 'singleSelect': !multiSelect, 'inactiveSite': !activeSite}">
+						<li class="action tools fadeToggle" ng-show="rootPerms['Allow_Show_Tools__c']" ng-class="{'disabled': multiSelect || activeSite.Trial_Expired__c || !sitePerms['Allow_Show_Tools__c']}">
+							<a class="pDMessageLink" ng-show="!multiSelect && activeSite && sitePerms['Allow_Show_Tools__c'] && !activeSite.Trial_Expired__c" href="{{locals.toolsUrl}}?id={{activeSite.Id}}&nonce={{activeSite.Mobile_Site_Nonce__c}}&basehostname={{locals.slugBaseDomain}}&templateId={{locals.templateId}}&dashboard={{locals.xforward}}" title="{{ 'Tools' | translate }}" send-title>{{ 'Tools' | translate }}</a>
+						</li>
+						<li class="action analytics fadeToggle" ng-show="rootPerms['Allow_Analytics__c']" ng-class="{'disabled': multiSelect || activeSite.Trial_Expired__c || !sitePerms['Allow_Analytics__c']}">
+							<a class="pDMessageLink" ng-show="!multiSelect && activeSite && sitePerms['Allow_Analytics__c'] && !activeSite.Trial_Expired__c" href="{{locals.analyticsUrl}}?id={{activeSite.Id}}&nonce={{activeSite.Mobile_Site_Nonce__c}}&basehostname={{locals.slugBaseDomain}}" title="{{ 'Analytics' | translate }}" send-title>{{ 'Analytics' | translate }}</a>
+						</li>
+						<li class="action custom fadeToggle" ng-show="rootPerms['Allow_custom_domain_change__c']" ng-class="{'disabled': multiSelect || activeSite.Trial_Expired__c || !sitePerms['Allow_custom_domain_change__c'], 'tabOpen': showCustom}">
+							<a class="pDMessageLink" ng-show="!multiSelect && activeSite && sitePerms['Allow_custom_domain_change__c'] && !activeSite.Trial_Expired__c" href="" title="{{ 'Custom Domain' | translate }}" ng-click="showCustom = !showCustom" send-title>{{ 'Custom Domain' | translate }}</a>
+						</li>
+						<li class="action redirection fadeToggle" ng-show="rootPerms['Allow_redirection_change__c']" ng-class="{'disabled': multiSelect || activeSite.Trial_Expired__c || !sitePerms['Allow_redirection_change__c'], 'tabOpen': showRedirection}">
+							<a class="pDMessageLink" ng-show="!multiSelect && activeSite && sitePerms['Allow_redirection_change__c'] && !activeSite.Trial_Expired__c" href="" title="{{ 'Redirection' | translate }}" ng-click="showRedirection = !showRedirection" send-title>{{ 'Redirection' | translate }}</a>
+						</li>
+						<li class="action promote fadeToggle" ng-class="{'disabled': multiSelect || activeSite.Trial_Expired__c, 'enabled': !multiSelect && activeSite, 'tabOpen': showPromote}">
+							<a class="pDMessageLink" ng-show="!multiSelect && activeSite && !activeSite.Trial_Expired__c" href="" title="{{ 'Promote' | translate }}" ng-click="showPromote = !showPromote" send-title>{{ 'Promote' | translate }}</a>
+						</li>
+						<li class="action ppT fadeToggle" ng-show="locals['allowShowPPT']" ng-class="{'disabled': multiSelect || activeSite.Trial_Expired__c, 'enabled': !multiSelect && activeSite}">
+							<a class="pDMessageLink" ng-show="!multiSelect && activeSite && !activeSite.Trial_Expired__c" target="_blank" href="{{locals['pptLocation']}}?pplogo={{pptConfig['pplogo']}}&ppheaderbg={{pptConfig['ppheaderbg']}}&ppbodybg={{pptConfig['ppbodybg']}}&ppwidth={{pptConfig['ppwidth']}}&ppheight={{pptConfig['ppheight']}}&ppbuttontext={{pptConfig['ppbuttontext']}}&ppheadertext={{pptConfig['ppheadertext']}}&ppleftwindowtext={{pptConfig['ppleftwindowtext']}}&pprightwindowtext={{pptConfig['pprightwindowtext']}}&ppprinttext={{pptConfig['ppprinttext']}}&ppcontactemailtext={{pptConfig['ppcontactemailtext']}}&ppcontactemailtext={{pptConfig['ppcontactemailtext']}}&ppcontactemaillinksubject={{pptConfig['ppcontactemaillinksubject']}}&ppcontactemaillinkbody={{pptConfig['ppcontactemaillinkbody']}}&ppcontactemail={{pptConfig['ppcontactemail']}}&ppcontactphone={{pptConfig['ppcontactphone']}}&ppverb={{pptConfig['verb']}}&ppshow={{pptConfig['ppshow']}}&ppdisclaimer={{pptConfig['ppdisclaimer']}}&ppframe1={{activeSite.Original_Site__c}}&ppframe2=http://{{activeSite.Default_Mobile_Domain__c}}.{{locals['slugBaseDomain']}}" title="{{ 'Partner Preview Tool' | translate }}" send-title>{{ 'Partner Preview Tool' | translate }}</a>
+						</li>
+						<li class="action cancelSub fadeToggle" ng-show="rootPerms['Allow_Unsubscribe__c']" ng-class="{'disabled': multiSelect || !activeSite.Purchased__c, 'enabled': !multiSelect && activeSite && activeSite.Purchased__c}">
+							<a class="pDMessageLink" ng-show="!multiSelect && activeSite && activeSite.Purchased__c" href="ModifySites?siteid={{activeSite.Id}}&method=removeFromSub" title="{{ 'Cancel Subscription' | translate }}" send-title>{{ 'Cancel Subscription' | translate }}</a>
+						</li>
+					</ul>
+				
+					
+					
+				</div>
+				
+
+			</div>
+			
+
+
+			<div class="settingsPanel" ng-class="{'fullWidth': userSettings.fullWidth}">
+				
+				<div class="globalMessage message {{globalMsgClass}}" role="alert">
+					{{globalMsg}}
+				</div>
+			
+				<div class="confirmBox" ng-show="confirmDelete">
+					<div class="confirmBoxInner">
+						<h4 translate>Confirm Deletion</h4>
+						<p translate>You are about to delete the following sites</p>
+						<p><ul><li ng-repeat="item in selectedRows" >{{item.Default_Mobile_Domain__c}}</li></ul></p>
+						<p><button ng-click="confirmDelete = !confirmDelete">Cancel</button><button ng-click="confirmDelete = !confirmDelete; deleteSites()">{{ 'Delete' | translate }}</button>
+					</div>
+				</div>
+				
+				<div class="confirmBox" ng-show="changeOwner">
+					<div class="confirmBoxInner">
+						<h4 translate>Confirm Owner Change</h4>
+						<p translate>You are about to change owner for the following sites</p>
+						<p><ul><li ng-repeat="item in selectedRows" >{{item.Default_Mobile_Domain__c}}</li></ul></p>
+						<p><button ng-click="changeOwner = !changeOwner">Cancel</button><button ng-click="changeOwner = !changeOwner; confirmOwner()">{{ 'Confirm' | translate }}</button>
+						<select ng-model="userSettings.defaultSites" ng-options="value for value in pagingOptions.pageSizes"></select><span translate>Select Owner</span></li>
+					</div>
+				</div>
+				
+				<div class="mySettings topPanel" ng-show="showSettings" >
+					<h3 translate>My Settings</h3>
+					<div>
+						<div class="col50">
+							<ul>
+								<li ng-show="locals['allowShowPPT']"><a class="configPpt" title="{{ 'Configure Partner Preview Tool' | translate }}" href="PartnerPreviewSetup" translate>Configure Partner Preview Tool</a></li>
+							</ul>
+							<ul>
+								<li><select ng-disabled="largeAccount" ng-model="userSettings.defaultSites" ng-options="value for value in pagingOptions.pageSizes"></select><span ng-class="{'disabled': largeAccount}" translate>Default Sites Per Page</span></li>
+								<li><input type="checkbox" ng-model="userSettings.fullWidth" ng-click="reDraw()" /><span translate>Full Width</span></li>
+							</ul>
+						</div>
+						<div class="col50">
+							<ul>
+								<li><input type="checkbox" ng-model="userSettings.shownCols.name" ng-click="toggleCol(0)" /><span translate>Show Logo Column</span></li>
+								<li><input type="checkbox" ng-model="userSettings.shownCols.name" ng-click="toggleCol(1)" /><span translate>Show Name Column</span></li>
+								<li><input type="checkbox" ng-model="userSettings.shownCols.basedUpon" ng-click="toggleCol(2)" /><span translate>Show Based Upon Column</span></li>
+								<li><input type="checkbox" ng-model="userSettings.shownCols.slug" ng-click="toggleCol(3)" /><span translate>Show Slug Column</span></li>
+								<li><input type="checkbox" ng-model="userSettings.shownCols.message" ng-click="toggleCol(4)" /><span translate>Show Message Column</span></li>
+								<li><input type="checkbox" ng-model="userSettings.shownCols.owner" ng-click="toggleCol(5)" /><span translate>Show Owner Column</span></li>
+							</ul>
+						</div>
+					</div>
+				</div>
+
+				<div class="redirection topPanel" ng-show="showRedirection && !multiSelect">
+					<h3 translate>Redirection Script</h3>
+					<textarea>
+<script type="text/javascript">
+	var mobile_domain ="{{activeSite.Default_Mobile_Domain__c}}.{{locals['slugBaseDomain']}}";
+	// Set to false to not redirect on iPad.
+	var ipad = true;
+	// Set to false to not redirect on other tablets (Android , BlackBerry, WebOS tablets).
+	var other_tablets = true;
+	document.write(unescape("%3Cscript src='"+location.protocol+"//s3.amazonaws.com/me.static/js/me.redirect.min.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+					</textarea>
+				</div>
+				
+				<div class="custom topPanel" ng-show="showCustom && !multiSelect">
+					<h3 translate>Custom Domain</h3>
+					
+					<div class="col50">
+						<h4 translate>Enter your Custom Domain here</h4>
+						<input type="text" ng-focus="cacheDomain()" ng-model="activeSite.Custom_Mobile_Domain__c" ng-blur="sendCustomDomain()" />
+						<br />
+						<span translate>Important Note: It can take up to 48 hours before the name record is updated</span>
+					</div>
+					
+					<div class="col50">
+						<h4 translate>How to set up your mobile domain</h4>
+						<ol>
+							<li translate>Add the custom `m.yoursite.com` domain on the left</li>
+							<li translate>Visit your domain providers website (where you purchased your domain). In many instances, this will be godaddy.com</li>
+							<li translate>Log in and access your account settings page</li>
+							<li translate>On the Domain Details page, locate and click on the launch link under the DNS Manager section</li>
+							<li translate>In the Zone File Editor page go to the CNAME (ALIAS) section and enter `m` as host and point this to <b>{{activeSite.Default_Mobile_Domain__c}}.{{locals['slugBaseDomain']}}</b></li>
+							<li translate>Save Changes</li>
+						</ol>
+					</div>
+				</div>
+				
+				<div class="promote topPanel" ng-show="showPromote && !multiSelect">
+					<h3 translate>Promote Your Website</h3>
+					<div id="confirmButtons">
+						<a href="http://www.facebook.com/sharer.php?u={{activeSite.Default_Mobile_Domain__c}}.{{locals['slugBaseDomain']}}&t={{ 'Check Out My New Mobile Website' | translate }}" target="_blank"><img src="https://s3.amazonaws.com/static-resources/templates/main/images/facebook_share.png" width="122" height="42" /></a>
+						<a href="http://twitter.com/home?status={{ 'Check Out My New Mobile Website' | translate }}:http://{{activeSite.Default_Mobile_Domain__c}}.{{locals['slugBaseDomain']}}" target="_blank"><img src="https://s3.amazonaws.com/static-resources/templates/main/images/twitter_share.png" width="122" height="42" /></a>
+						<a href="mailto:?subject={{activeSite.Default_Mobile_Domain__c}}.{{locals['slugBaseDomain']}}" target="_blank"><img src="https://s3.amazonaws.com/static-resources/templates/main/images/email_share.png" width="122" height="42" /></a>
+						<a href="http://me.dev.bmobilized.com/api/qr/?site={{activeSite.Default_Mobile_Domain__c}}.{{locals['slugBaseDomain']}}" target="_blank"><img src="https://s3.amazonaws.com/static-resources/templates/main/images/qr.png" width="122" height="42" /></a>
+					</div>
+				</div>
+				
+			</div>
+			<!-- Grid here -->
+			<div class="gridStyle" ng-grid="gridOptions" ng-class="{'fullWidth': userSettings.fullWidth}"></div>
+			
+			
+			
